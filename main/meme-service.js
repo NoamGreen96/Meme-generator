@@ -1,9 +1,10 @@
 'use strict'
+
 let gElCanvas
 let gCtx
 let gCurrLineIdx = 0
 
-var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
+let gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
 
 var gImgs = [
   { id: 1, url: 'img/1.jpg', keywords: ['funny', 'cat'] },
@@ -19,21 +20,107 @@ var gImgs = [
 ]
 
 var gMeme = {
-  selectedImgId: 5,
+  selectedImgId: 1,
   selectedLineIdx: 0,
   lines: [
-    { txt: 'I sometimes eat Falafel', size: 20, align: 'center', color: 'red' },
+    {
+      txt: 'I sometimes eat Falafel',
+      align: 'center',
+      color: 'black',
+      font: 'impact',
+      isDrag: true,
+      size: 20,
+      pos: { x: 120, y: 50 },
+    },
+    {
+      txt: '',
+      align: 'center',
+      color: 'black',
+      font: 'impact',
+      isDrag: true,
+      size: 20,
+      pos: { x: 120, y: 350 },
+    },
+    {
+      txt: '',
+      align: 'center',
+      color: 'black',
+      font: 'impact',
+      isDrag: true,
+      size: 20,
+      pos: { x: 120, y: 170 },
+    },
   ],
 }
 
 function getMeme() {
-  return gMeme.lines
+  return gMeme
 }
 
-function getImg() {
-  return gImgs[0]
-}
+// function getImg() {
+//   return gImgs[0]
+// }
 
 function getLine() {
   return gMeme.lines[gCurrLineIdx]
+}
+// function getLines() {
+//   return gMeme.lines
+// }
+
+// editor
+
+function _createLine(font, lineIdx) {
+  const newPos = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
+
+  if (lineIdx === 1) newPos.y = 50
+  if (lineIdx === 2) newPos.y = gElCanvas.height - 80
+  if (lineIdx === 3) newPos.y = 250
+  if (lineIdx > 3) return
+
+  return {
+    txt: '',
+    align: 'center',
+    color: 'black',
+    isDrag: true,
+    size: 20,
+    pos: { x: gElCanvas.width / 2, y: gElCanvas.height / 2 },
+  }
+}
+
+function changeAlign(align) {
+  const line = getLine()
+  line.align = align
+
+  switch (align) {
+    case 'left':
+      line.pos.x = 0
+      break
+    case 'center':
+      line.pos.x = gElCanvas.width / 2
+      break
+    case 'right':
+      line.pos.x = gElCanvas.width
+      break
+  }
+}
+
+function changeFontFamily(font) {
+  const line = getLine()
+  if (!line) return
+  line.font = font
+  renderCanvas()
+}
+
+function swichLine() {
+  gCurrLineIdx++
+  if (gCurrLineIdx === gMeme.lines.length) gCurrLineIdx = 0
+}
+
+function updateLineIdx(lineIdx) {
+  gCurrLineIdx = lineIdx
+}
+
+function removeLine() {
+  gMeme.lines.splice(gCurrLineIdx, 1)
 }
