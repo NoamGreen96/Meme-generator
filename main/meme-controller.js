@@ -39,15 +39,16 @@ function onOpenPage(page) {
   }
 }
 function openGallery() {
-  document.querySelector('.images-container').classList.remove('none')
-  document.querySelector('.editor-container').classList.add('none')
+  document.querySelector('.gallery-container').classList.remove('none')
+  // document.querySelector('.editor-container').classList.add('none')
   document.querySelector('.main-nav .btn-gallery').classList.add('active')
 }
 
 function openMemes() {
-  // document.querySelector('.my-memes-container').classList.remove('none')
   document.querySelector('.main-nav .btn-memes').classList.add('active')
-  renderCanvas()
+
+  // document.querySelector('.my-memes-container').classList.remove('none')
+  // renderCanvas()
 }
 
 function openAbout() {
@@ -58,18 +59,25 @@ function openAbout() {
 function _hideSections() {
   // sections
   document.querySelector('.gallery-container').classList.add('none')
-  document.querySelector('.editor-container').classList.add('none')
-  // document.querySelector('.my-memes-container').classList.add('none')
-  // document.querySelector('.about-container').classList.add('none')
+  var s = document.querySelector('.editor-container').classList.add('none')
+  console.log(s)
+  document.querySelector('.about-container').classList.add('none')
 
-  // nav buttons
+  // document.querySelector('.my-memes-container').classList.add('none')
+
+  // nav buttons active
   document.querySelector('.main-nav .btn-gallery').classList.remove('active')
   document.querySelector('.main-nav .btn-memes').classList.remove('active')
   document.querySelector('.main-nav .btn-about').classList.remove('active')
 }
+function _moveToEditorPage() {
+  document.querySelector('.gallery-container').classList.add('none')
+  document.querySelector('.editor-container').classList.remove('none')
+}
 
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
+
 function renderCanvas() {
   const meme = getMeme()
   var img = new Image()
@@ -80,10 +88,14 @@ function renderCanvas() {
     meme.lines.forEach((line) => {
       gCtx.font = `${line.size}px ${line.font}`
       gCtx.fillStyle = line.color
+      gCtx.strokeStyle = line.strokeColor
+      // line.stroke.color
+      gCtx.lineWidth = 1
       gCtx.textAlign = line.align
       gCtx.textBaseline = 'middle' // Set the fill color for the text
       let text = line.txt
       gCtx.fillText(text, line.pos.x, line.pos.y)
+      gCtx.strokeText(text, line.pos.x, line.pos.y)
 
       drawBorder()
     })
@@ -205,6 +217,11 @@ function onChangetxt(txt) {
 
 function onChangetxtcolor(color) {
   gMeme.lines[gCurrLineIdx].color = color
+  renderCanvas()
+}
+function onChangeStrokecolor(strokeColor) {
+  gMeme.lines[gCurrLineIdx].strokeColor = strokeColor
+  console.log(gMeme)
   renderCanvas()
 }
 

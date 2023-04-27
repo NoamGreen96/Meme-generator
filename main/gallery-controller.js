@@ -18,5 +18,6 @@ function renderGallery() {
 
 function onImgSelect(id) {
   setimgById(id)
+  _moveToEditorPage()
   renderCanvas()
 }
