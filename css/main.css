@@ -2,21 +2,21 @@
 
 @font-face {
   font-family: impact;
-  src: url(/font/impact/impact.ttf);
+  src: url(../font/impact/impact.ttf);
 }
 
 @font-face {
   font-family: comic;
-  src: url(/font/comic/ComicNeue-Regular.ttf);
+  src: url(../font/comic/ComicNeue-Regular.ttf);
 }
 
 @font-face {
   font-family: vardana;
-  src: url(/font/vardana/verdana.ttf);
+  src: url(../font/vardana/verdana.ttf);
 }
 @font-face {
   font-family: montserrat;
-  src: url(/font/montserrat/Montserrat-Regular.ttf);
+  src: url(../font/montserrat/Montserrat-Regular.ttf);
 }
 
 * {
