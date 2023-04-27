@@ -17,6 +17,14 @@ var gImgs = [
   { id: 8, url: 'img/8.jpg', keywords: ['funny', 'cat'] },
   { id: 9, url: 'img/9.jpg', keywords: ['funny', 'cat'] },
   { id: 10, url: 'img/10.jpg', keywords: ['funny', 'cat'] },
+  { id: 11, url: 'img/11.jpg', keywords: ['funny', 'cat'] },
+  { id: 12, url: 'img/12.jpg', keywords: ['funny', 'cat'] },
+  { id: 10, url: 'img/13.jpg', keywords: ['funny', 'cat'] },
+  { id: 10, url: 'img/14.jpg', keywords: ['funny', 'cat'] },
+  { id: 10, url: 'img/15.jpg', keywords: ['funny', 'cat'] },
+  { id: 10, url: 'img/16.jpg', keywords: ['funny', 'cat'] },
+  { id: 10, url: 'img/17.jpg', keywords: ['funny', 'cat'] },
+  { id: 10, url: 'img/18.jpg', keywords: ['funny', 'cat'] },
 ]
 
 var gMeme = {
@@ -64,15 +72,20 @@ function getMeme() {
 function getLine() {
   return gMeme.lines[gCurrLineIdx]
 }
-// function getLines() {
-//   return gMeme.lines
-// }
+function getLines() {
+  return gMeme.lines
+}
 
 // editor
 
+function moveLine(diff, dir) {
+  const line = getLine()
+  line.pos[dir] += diff
+}
+
 function _createLine(font, lineIdx) {
   const newPos = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
-
+  clearText()
   if (lineIdx === 1) newPos.y = 50
   if (lineIdx === 2) newPos.y = gElCanvas.height - 80
   if (lineIdx === 3) newPos.y = 250
@@ -113,7 +126,9 @@ function changeFontFamily(font) {
 }
 
 function swichLine() {
+  const line = getLine()
   gCurrLineIdx++
+  clearText(line.txt)
   if (gCurrLineIdx === gMeme.lines.length) gCurrLineIdx = 0
 }
 
@@ -123,4 +138,13 @@ function updateLineIdx(lineIdx) {
 
 function removeLine() {
   gMeme.lines.splice(gCurrLineIdx, 1)
+  clearText()
+}
+
+function clearText(txt) {
+  if (!txt) {
+    document.querySelector('#text').value = ''
+  } else {
+    document.querySelector('#text').value = txt
+  }
 }

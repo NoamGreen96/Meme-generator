@@ -10,6 +10,7 @@
   <body onload="onInit()">
     <!-- Main Sceen -->
     <div class="main-screen" onclick="onToggleMenu()"></div>
+    
     <!-- Header -->
     <header class="main-header">
       <div class="header-container main-layout flex space-between align-center"
@@ -53,7 +54,8 @@
       </div>
     </header>
 
-    <main>
+<!-- editor container -->
+    <main class="editor-container main-layout flex none">
       <div class="canvas-container" >
         <canvas
           id="my-canvas"
@@ -64,13 +66,13 @@
       </div>
 
       <!-- editing Tools: -->
-      <div class="control-box">
+      <div class="tools-container">
         Write a text here:
         <input
           oninput="onChangetxt(this.value)"
           type="text"
           name="line"
-          id=""
+          id="text"
           placeholder="Write meme text.."
         />
         TextColor:
@@ -123,9 +125,34 @@ download="my-meme.jpg">
 
   </main>
   </div>
-  <!-- images Gallery -->
-    <section class="images-container"></section>
 
+<!-- gallery container -->
+<main class="gallery-container">
+  <section class="search-fillter"></section>
+<section class="images-container main-layout grid"></section>
+</main>
+<!-- contact-main -->
+<section class="contact-container main-layout flex flex-column justify-center align-center">
+  <div class="contact-img">s</div>
+  <div class="contact-details">s</div>
+  <div></div>
+
+
+
+</section>
+
+
+
+
+<!-- main-footer -->
+<footer class="main-footer">
+<div class="footer-conatiner main-layout flex flex-column space-between align-center">
+<div class="footer-logo">memegen</div>
+<div>all rights reserved 2023 ©</div>
+</div>
+</footer>
+
+  
     <script src="main/meme-service.js"></script>
     <script src="main/meme-controller.js"></script>
     <script src="main/gallery-controller.js"></script>

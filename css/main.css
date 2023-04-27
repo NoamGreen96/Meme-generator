@@ -14,6 +14,10 @@
   font-family: vardana;
   src: url(/font/vardana/verdana.ttf);
 }
+@font-face {
+  font-family: montserrat;
+  src: url(/font/montserrat/Montserrat-Regular.ttf);
+}
 
 * {
   box-sizing: border-box;
@@ -22,7 +26,7 @@
 body {
   margin: 0;
   height: 100vh;
-  font-family: mont, serif;
+  font-family: montserrat;
   background-color: #e3e3e3;
 }
 
@@ -34,7 +38,7 @@ h5,
 h6 {
   margin: 0;
   padding: 0;
-  font-family: mont-bold;
+  /* font-family: montserrat; */
   font-weight: bold;
 }
 
@@ -80,6 +84,7 @@ h6 {
 .none {
   display: none;
 }
+
 /* Layout */
 .main-layout {
   max-width: 600px;
@@ -103,10 +108,17 @@ h6 {
   font-size: 2rem;
 }
 
+.main-nav {
+  display: none;
+}
+
 /* Mobile First */
 @media (min-width: 820px) {
   .btn-menu {
     display: none;
+  }
+  .main-nav {
+    display: block;
   }
 
   .main-layout {
@@ -137,7 +149,6 @@ h6 {
   .main-header .main-nav a {
     text-decoration: none;
     color: #fff;
-    font-family: mont;
     font-size: 1.1875rem;
     line-height: 0.7125;
   }
@@ -145,6 +156,14 @@ h6 {
   .gallery-container .search-fillter-container {
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .gallery-container .images-container,
+  .meme-container {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 20px;
+    justify-items: center;
+    margin-bottom: 20px;
   }
 
   .contact-main .contact-container {

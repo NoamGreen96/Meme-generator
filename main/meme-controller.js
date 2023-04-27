@@ -8,6 +8,68 @@ function onInit() {
   renderGallery()
 }
 
+///////////////////////////////////////////////
+//              Page functions
+///////////////////////////////////////////////
+function onToggleMenu() {
+  if (window.innerWidth > 820) document.body.classList.remove('menu-open')
+  else document.body.classList.toggle('menu-open')
+  const elBtnMenu = document.querySelector('.btn-menu')
+  elBtnMenu.innerText = document.body.classList.contains('menu-open')
+    ? '✕'
+    : '☰'
+}
+
+function onOpenPage(page) {
+  onToggleMenu()
+  _hideSections()
+  switch (page) {
+    case 'gallery':
+      console.log('gallery')
+      openGallery()
+      break
+    case 'memes':
+      console.log('memes')
+      openMemes()
+      break
+    case 'about':
+      console.log('about')
+      openAbout()
+      break
+  }
+}
+function openGallery() {
+  document.querySelector('.images-container').classList.remove('none')
+  document.querySelector('.editor-container').classList.add('none')
+  document.querySelector('.main-nav .btn-gallery').classList.add('active')
+}
+
+function openMemes() {
+  // document.querySelector('.my-memes-container').classList.remove('none')
+  document.querySelector('.main-nav .btn-memes').classList.add('active')
+  renderCanvas()
+}
+
+function openAbout() {
+  document.querySelector('.about-container').classList.remove('none')
+  document.querySelector('.main-nav .btn-about').classList.add('active')
+}
+
+function _hideSections() {
+  // sections
+  document.querySelector('.gallery-container').classList.add('none')
+  document.querySelector('.editor-container').classList.add('none')
+  // document.querySelector('.my-memes-container').classList.add('none')
+  // document.querySelector('.about-container').classList.add('none')
+
+  // nav buttons
+  document.querySelector('.main-nav .btn-gallery').classList.remove('active')
+  document.querySelector('.main-nav .btn-memes').classList.remove('active')
+  document.querySelector('.main-nav .btn-about').classList.remove('active')
+}
+
+///////////////////////////////////////////////
+///////////////////////////////////////////////
 function renderCanvas() {
   const meme = getMeme()
   var img = new Image()
@@ -22,6 +84,7 @@ function renderCanvas() {
       gCtx.textBaseline = 'middle' // Set the fill color for the text
       let text = line.txt
       gCtx.fillText(text, line.pos.x, line.pos.y)
+
       drawBorder()
     })
   }
@@ -67,11 +130,13 @@ function addListeners() {
 function onDown(ev) {
   const { offsetX, offsetY } = ev
   const isClicked = isLineClicked(offsetX, offsetY)
+  renderCanvas()
 }
 
 function isLineClicked(offsetX, offsetY) {
   const lines = getLines()
   const clickedLineIdx = lines.findIndex((line) => {
+    clearText(line.txt)
     const lineWidth = gCtx.measureText(line.txt).width
     const lineHeight = line.size
     return (
@@ -83,22 +148,25 @@ function isLineClicked(offsetX, offsetY) {
   })
   if (clickedLineIdx !== -1) {
     updateLineIdx(clickedLineIdx)
-    console.log('clickedLineIdx', clickedLineIdx)
+
+    // console.log('clickedLineIdx', clickedLineIdx)
 
     return true
   }
+  clearText(lines.txt)
   return false
 }
 
+// Eaditing tool
+
 function onDownloadMeme(elLink) {
   const memeContent = gElCanvas.toDataURL()
-  // console.log(memeContent)
   elLink.href = memeContent
 }
 
-// Eaditing tool
 function onAddLine(font) {
   const lines = getLine()
+  clearText(lines.txt)
   if (lines.length === 3) return
   const lineIdx = lines.length + 1
   const newLine = _createLine(font, lineIdx)
@@ -107,7 +175,7 @@ function onAddLine(font) {
 }
 
 function onMoveLine(direction) {
-  const diff = direction === 'up' ? -5 : 5
+  const diff = direction === 'up' ? -10 : 10
   moveLine(diff, 'y')
   renderCanvas()
 }
